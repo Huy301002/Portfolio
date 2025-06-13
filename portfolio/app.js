@@ -142,3 +142,106 @@ function initAnimations() {
      }, '-=0.3')
 
 }
+
+// Smooth Scroll and Active Navigation
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+// Function to handle smooth scroll
+const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const targetSection = document.querySelector(targetId);
+    const navHeight = document.querySelector('nav').offsetHeight;
+    const targetPosition = targetSection.offsetTop - navHeight;
+
+    window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+    });
+
+    // Close mobile menu if open
+    if (mobileMenu.classList.contains('active')) {
+        menuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        body.style.overflow = '';
+    }
+};
+
+// Add click event listeners to all navigation links
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        handleSmoothScroll(e, link.getAttribute('href'));
+    });
+});
+
+mobileLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        handleSmoothScroll(e, link.getAttribute('href'));
+    });
+});
+
+// Function to update active navigation link
+const updateActiveLink = () => {
+    const scrollPosition = window.scrollY + 100; // Offset for better detection
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            // Remove active class from all links
+            navLinks.forEach(link => link.classList.remove('active'));
+            mobileLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to current section's link
+            document.querySelector(`.nav-links a[href="#${sectionId}"]`)?.classList.add('active');
+            document.querySelector(`.mobile-menu a[href="#${sectionId}"]`)?.classList.add('active');
+        }
+    });
+};
+
+// Add scroll event listener
+window.addEventListener('scroll', updateActiveLink);
+
+// Initialize active link on page load
+window.addEventListener('load', updateActiveLink);
+
+// Form Submission
+const contactForm = document.getElementById('contactForm');
+
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(contactForm);
+    const data = Object.fromEntries(formData);
+    
+    // Here you would typically send the data to your backend
+    // For now, we'll just log it and show a success message
+    console.log('Form submitted:', data);
+    
+    // Show success message
+    alert('Thank you for your message! I will get back to you soon.');
+    
+    // Reset form
+    contactForm.reset();
+});
+
+// Animate skill bars on scroll
+const skillBars = document.querySelectorAll('.skill-progress');
+
+const animateSkillBars = () => {
+    skillBars.forEach(bar => {
+        const barPosition = bar.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight;
+        
+        if (barPosition < screenPosition) {
+            bar.style.width = bar.style.width; // Trigger animation
+        }
+    });
+};
+
+window.addEventListener('scroll', animateSkillBars);
+window.addEventListener('load', animateSkillBars);
