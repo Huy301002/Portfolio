@@ -67,7 +67,7 @@ function initLoader() {
                 opacity: 0,
                 duration: 0.7,
                 onComplete: () => {
-                    loader.style.display = 'none'; 
+                    loader.style.display = 'none';
                     initAnimations();
                 }
 
@@ -84,8 +84,8 @@ if (window.innerWidth > 768) {
 
     document.addEventListener('mousemove', (e) => {
         gsap.to(cursor, {
-            x: e.clientX -10,
-            y: e.clientY -10,
+            x: e.clientX - 10,
+            y: e.clientY - 10,
             duration: 0.1,
         })
         gsap.to(cursorFollower, {
@@ -94,20 +94,51 @@ if (window.innerWidth > 768) {
             duration: 0.2,
         });
     }
-    // Show custom cursor on mouse move
+        // Show custom cursor on mouse move
     );
 }
 
 // initialze loader on page load
-window.addEventListener('load',initLoader);
+window.addEventListener('load', initLoader);
 
 
 // initialze all animations
 function initAnimations() {
-   // Navigation animation
+    // Navigation animation
     gsap.to('nav', {
         duration: 1,
         ease: 'power2.inOut',
         y: 0
     });
+
+    // Hero animation
+    const heroT1 = gsap.timeline()
+    heroT1.to('.hero-title', {
+        duration: 1.2,
+        filter: 'blur(0px)',
+        ease: 'power3.out',
+        y: 0,
+        opacity: 1
+    }).to('.hero-subtitle', {
+        duration: 0.8,
+        filter: 'blur(0px)',
+        ease: 'power3.out',
+        y: 0,
+        opacity: 1
+    }, '-=0.5')
+    .to('.hero-description', {
+        duration: 0.8,
+        filter: 'blur(0px)',
+        ease: 'power3.out',
+        y: 0,
+        opacity: 1
+    }, '-=0.3')
+    .to('.cta-button', {
+        duration: 0.8,
+        filter: 'blur(0px)',
+        ease: 'power3.out',
+        y: 0,
+        opacity: 1
+     }, '-=0.3')
+
 }
