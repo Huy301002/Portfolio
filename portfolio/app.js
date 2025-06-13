@@ -75,6 +75,29 @@ function initLoader() {
         }
     });
 }
+
+// Custom cursor (only on desktop)
+if (window.innerWidth > 768) {
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+
+
+    document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {
+            x: e.clientX -10,
+            y: e.clientY -10,
+            duration: 0.1,
+        })
+        gsap.to(cursorFollower, {
+            x: e.clientX - 20,
+            y: e.clientY - 20,
+            duration: 0.2,
+        });
+    }
+    // Show custom cursor on mouse move
+    );
+}
+
 // initialze loader on page load
 window.addEventListener('load',initLoader);
 
