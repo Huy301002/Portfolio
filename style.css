@@ -499,55 +499,97 @@ nav {
     color: var(--accent);
 }
 
-/* Skills Section */
+/* Skills Section Styles */
 .skills-content {
-    max-width: 800px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.skills-category {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skills-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px var(--shadow);
 }
 
 .skills-category h3 {
     font-size: 1.5rem;
-    margin-bottom: 2rem;
     color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.skills-category h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.skills-category:hover h3::after {
+    width: 100px;
 }
 
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .skill-item {
-    background: var(--bg-secondary);
+    background: var(--bg-primary);
     padding: 1.5rem;
-    border-radius: 15px;
-    transition: transform 0.3s ease;
+    border-radius: 0.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 .skill-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px var(--shadow);
 }
 
 .skill-icon {
     font-size: 2rem;
     margin-bottom: 1rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.skill-item:hover .skill-icon {
+    transform: scale(1.1);
 }
 
 .skill-item h4 {
+    font-size: 1.1rem;
     margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
 .skill-level {
-    height: 8px;
-    background: var(--border-color);
-    border-radius: 4px;
+    height: 6px;
+    background: var(--bg-secondary);
+    border-radius: 3px;
     overflow: hidden;
 }
 
 .skill-progress {
     height: 100%;
     background: linear-gradient(90deg, var(--color), var(--accent));
-    border-radius: 4px;
+    border-radius: 3px;
     transition: width 1s ease;
 }
 
@@ -709,6 +751,14 @@ nav {
     .contact-info {
         grid-template-columns: 1fr;
     }
+
+    .skills-category {
+        padding: 1.5rem;
+    }
+    
+    .skill-item {
+        padding: 1.2rem;
+    }
 }
 
 /* Smooth Scroll Behavior */
@@ -724,4 +774,97 @@ html {
 
 .nav-links a.active::after {
     width: 100%;
+}
+
+/* Bento Skills Grid Layout chuẩn Nhật */
+.skills-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "cpp      reactjs   flutter   figma"
+    "nextjs   prompt    prompt    reactnative"
+    "mssql    prompt    prompt    vscode"
+    "java     github    vercel    aimodel"
+    "aiint    htmlcss   htmlcss   htmlcss";
+  grid-auto-rows: 110px;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+}
+
+.bento-square-largest {
+  grid-column: span 2 !important;
+  grid-row: span 2 !important;
+}
+
+/* Đảm bảo mỗi card đúng area */
+[style*="grid-area: cpp"]      { grid-area: cpp; }
+[style*="grid-area: reactjs"]  { grid-area: reactjs; }
+[style*="grid-area: flutter"]  { grid-area: flutter; }
+[style*="grid-area: figma"]    { grid-area: figma; }
+[style*="grid-area: nextjs"]   { grid-area: nextjs; }
+[style*="grid-area: reactnative"] { grid-area: reactnative; }
+[style*="grid-area: mssql"]    { grid-area: mssql; }
+[style*="grid-area: vscode"]   { grid-area: vscode; }
+[style*="grid-area: java"]     { grid-area: java; }
+[style*="grid-area: github"]   { grid-area: github; }
+[style*="grid-area: vercel"]   { grid-area: vercel; }
+[style*="grid-area: prompt"]   { grid-area: prompt; }
+[style*="grid-area: aimodel"]  { grid-area: aimodel; }
+[style*="grid-area: aiint"]    { grid-area: aiint; }
+[style*="grid-area: htmlcss"]  { grid-area: htmlcss; }
+
+@media (max-width: 900px) {
+  .skills-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "cpp      reactjs"
+      "flutter  figma"
+      "nextjs   prompt"
+      "prompt   reactnative"
+      "mssql    prompt"
+      "prompt   vscode"
+      "java     github"
+      "vercel   aimodel"
+      "aiint    htmlcss";
+    grid-auto-rows: 100px;
+    gap: 0.5rem;
+  }
+  .bento-square-largest {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "cpp"
+      "reactjs"
+      "flutter"
+      "figma"
+      "nextjs"
+      "prompt"
+      "reactnative"
+      "mssql"
+      "vscode"
+      "java"
+      "github"
+      "vercel"
+      "aimodel"
+      "aiint"
+      "htmlcss";
+    grid-auto-rows: 90px;
+    gap: 0.5rem;
+  }
+  .bento-square-largest {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+.skill-bento-card {
+  border-radius: 5px !important;
+  border: 2px solid var(--accent) !important;
+  /* ...các thuộc tính khác giữ nguyên... */
 }

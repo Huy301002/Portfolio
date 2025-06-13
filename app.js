@@ -139,8 +139,127 @@ function initAnimations() {
         ease: 'power3.out',
         y: 0,
         opacity: 1
-     }, '-=0.3')
+    }, '-=0.3');
 
+    // About section animation
+    gsap.from('.about-content', {
+        scrollTrigger: {
+            trigger: '.about',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        ease: 'power3.out'
+    });
+
+    gsap.from('.about-image', {
+        scrollTrigger: {
+            trigger: '.about',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1.2,
+        x: -50,
+        opacity: 0,
+        ease: 'power3.out',
+        delay: 0.3
+    });
+
+    gsap.from('.about-text', {
+        scrollTrigger: {
+            trigger: '.about',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1.2,
+        x: 50,
+        opacity: 0,
+        ease: 'power3.out',
+        delay: 0.3
+    });
+
+    // Skills section animation
+    gsap.from('.skills-category', {
+        scrollTrigger: {
+            trigger: '.skills',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1,
+        y: 30,
+        opacity: 0,
+        ease: 'power3.out'
+    });
+
+    gsap.from('.skill-item', {
+        scrollTrigger: {
+            trigger: '.skills',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 0.8,
+        y: 30,
+        opacity: 0,
+        stagger: 0.2,
+        ease: 'power3.out',
+        delay: 0.3
+    });
+
+    // Projects section animation
+    gsap.from('.project-card', {
+        scrollTrigger: {
+            trigger: '.projects',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        stagger: 0.3,
+        ease: 'power3.out'
+    });
+
+    // Contact section animation
+    gsap.from('.contact-info', {
+        scrollTrigger: {
+            trigger: '.contact',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1,
+        x: -50,
+        opacity: 0,
+        ease: 'power3.out'
+    });
+
+    gsap.from('.contact-form', {
+        scrollTrigger: {
+            trigger: '.contact',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 1,
+        x: 50,
+        opacity: 0,
+        ease: 'power3.out',
+        delay: 0.3
+    });
+
+    gsap.from('.contact-item', {
+        scrollTrigger: {
+            trigger: '.contact',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 0.8,
+        y: 30,
+        opacity: 0,
+        stagger: 0.2,
+        ease: 'power3.out',
+        delay: 0.3
+    });
 }
 
 // Smooth Scroll and Active Navigation
