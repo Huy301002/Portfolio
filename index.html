@@ -10,6 +10,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 </head>
 
 <body>
@@ -117,18 +118,18 @@
     <section id="skills" class="skills section">
         <div class="container">
             <h2 class="section-title">My Skills</h2>
-            <div class="skills-bento-grid">
+            <div class="skills-bento-grid" id="skillsGrid">
                 <div class="skill-bento-card bento-square" style="--bento-color: #e0f7fa; grid-area: cpp;">
                     <span class="skill-bento-icon">⚡</span>
                     <span class="skill-bento-title">C++</span>
                     <span class="skill-bento-desc">Hiệu năng, thuật toán</span>
                 </div>
-                <div class="skill-bento-card bento-rect-horizontal" style="--bento-color: #b3e5fc; grid-area: reactjs;">
+                <div class="skill-bento-card bento-square" style="--bento-color: #b3e5fc; grid-area: reactjs;">
                     <span class="skill-bento-icon">⚛️</span>
                     <span class="skill-bento-title">ReactJS</span>
                     <span class="skill-bento-desc">SPA, UI hiện đại</span>
                 </div>
-                <div class="skill-bento-card bento-rect-vertical" style="--bento-color: #ffe0b2; grid-area: flutter;">
+                <div class="skill-bento-card bento-square" style="--bento-color: #ffe0b2; grid-area: flutter;">
                     <span class="skill-bento-icon">📱</span>
                     <span class="skill-bento-title">Flutter</span>
                     <span class="skill-bento-desc">Mobile đa nền tảng</span>
@@ -138,10 +139,15 @@
                     <span class="skill-bento-title">Figma</span>
                     <span class="skill-bento-desc">Thiết kế UI/UX</span>
                 </div>
-                <div class="skill-bento-card bento-rect-horizontal" style="--bento-color: #f8bbd0; grid-area: nextjs;">
+                <div class="skill-bento-card bento-square" style="--bento-color: #f8bbd0; grid-area: nextjs;">
                     <span class="skill-bento-icon">▲</span>
                     <span class="skill-bento-title">NextJS</span>
                     <span class="skill-bento-desc">SSR, SEO, Fullstack</span>
+                </div>
+                <div class="skill-bento-card bento-square-largest" style="--bento-color: #cfd8dc; grid-area: prompt;">
+                    <span class="skill-bento-icon">🤖</span>
+                    <span class="skill-bento-title">Prompt Engineering</span>
+                    <span class="skill-bento-desc">AI, LLM, ChatGPT</span>
                 </div>
                 <div class="skill-bento-card bento-rect-vertical" style="--bento-color: #fff9c4; grid-area: reactnative;">
                     <span class="skill-bento-icon">📱</span>
@@ -172,21 +178,6 @@
                     <span class="skill-bento-icon">▲</span>
                     <span class="skill-bento-title">Vercel</span>
                     <span class="skill-bento-desc">Deploy web</span>
-                </div>
-                <div class="skill-bento-card bento-square-largest" style="--bento-color: #cfd8dc; grid-area: prompt;">
-                    <span class="skill-bento-icon">🤖</span>
-                    <span class="skill-bento-title">Prompt Engineering</span>
-                    <span class="skill-bento-desc">AI, LLM, ChatGPT</span>
-                </div>
-                <div class="skill-bento-card bento-square" style="--bento-color: #f5e1da; grid-area: aimodel;">
-                    <span class="skill-bento-icon">🎯</span>
-                    <span class="skill-bento-title">AI Model Training</span>
-                    <span class="skill-bento-desc">Huấn luyện AI</span>
-                </div>
-                <div class="skill-bento-card bento-square" style="--bento-color: #e1f5fe; grid-area: aiint;">
-                    <span class="skill-bento-icon">💡</span>
-                    <span class="skill-bento-title">AI Integration</span>
-                    <span class="skill-bento-desc">Tích hợp AI</span>
                 </div>
                 <div class="skill-bento-card bento-rect-horizontal" style="--bento-color: #c8e6c9; grid-area: htmlcss;">
                     <span class="skill-bento-icon">🌐</span>

@@ -260,6 +260,9 @@ function initAnimations() {
         ease: 'power3.out',
         delay: 0.3
     });
+
+    // Initialize skills animations
+    initSkillsAnimations();
 }
 
 // Smooth Scroll and Active Navigation
@@ -364,3 +367,128 @@ const animateSkillBars = () => {
 
 window.addEventListener('scroll', animateSkillBars);
 window.addEventListener('load', animateSkillBars);
+
+// Skills section animations
+function initSkillsAnimations() {
+    const skillCards = document.querySelectorAll('.skill-bento-card');
+    
+    // Add intersection observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.visibility = 'visible';
+                // Add a subtle hover effect
+                entry.target.addEventListener('mouseenter', () => {
+                    gsap.to(entry.target, {
+                        scale: 1.05,
+                        duration: 0.3,
+                        ease: 'power2.out',
+                        boxShadow: '0 12px 40px 0 rgba(31, 38, 135, 0.25)'
+                    });
+                });
+                
+                entry.target.addEventListener('mouseleave', () => {
+                    gsap.to(entry.target, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: 'power2.out',
+                        boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)'
+                    });
+                });
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '-50px'
+    });
+
+    // Observe each skill card
+    skillCards.forEach(card => {
+        card.style.visibility = 'hidden';
+        observer.observe(card);
+        
+        // Add click animation
+        card.addEventListener('click', () => {
+            gsap.to(card, {
+                scale: 0.95,
+                duration: 0.1,
+                ease: 'power2.in',
+                onComplete: () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: 'elastic.out(1, 0.5)'
+                    });
+                }
+            });
+        });
+    });
+
+    // Add floating animation to icons
+    skillCards.forEach(card => {
+        const icon = card.querySelector('.skill-bento-icon');
+        if (icon) {
+            gsap.to(icon, {
+                y: -5,
+                duration: 1.5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power1.inOut',
+                delay: Math.random() * 0.5
+            });
+        }
+    });
+}
+
+// Hiệu ứng xuất hiện lần lượt cho skills
+function staggerSkillsAnimation() {
+    const skillCards = Array.from(document.querySelectorAll('.skills-bento-grid .skill-bento-card'));
+    // Định nghĩa grid-template-areas giống trong CSS
+    const gridAreas = [
+        ['cpp', 'reactjs', 'flutter', 'figma'],
+        ['nextjs', 'prompt', 'prompt', 'vscode'],
+        ['mssql', 'prompt', 'prompt', 'reactnative'],
+        ['java', 'github', 'vercel', 'reactnative'],
+        ['htmlcss', 'htmlcss', 'htmlcss', 'htmlcss']
+    ];
+
+    // Tạo mảng theo thứ tự trái sang phải, trên xuống dưới
+    const orderedCards = [];
+    const used = new Set();
+    for (let row of gridAreas) {
+        for (let area of row) {
+            // Tìm card đầu tiên có grid-area này mà chưa được thêm vào
+            const card = skillCards.find(c => c.style.gridArea === area && !used.has(c));
+            if (card) {
+                orderedCards.push(card);
+                used.add(card);
+            }
+        }
+    }
+
+    // Gán delay theo thứ tự đã sắp xếp
+    orderedCards.forEach((card, idx) => {
+        card.style.animationDelay = `${1.5 * idx}s`;
+        card.style.animationPlayState = 'paused';
+        card.classList.remove('animated');
+    });
+
+    // Intersection Observer như cũ
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                orderedCards.forEach(card => {
+                    card.style.animationPlayState = 'running';
+                    card.classList.add('animated');
+                });
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.2 });
+
+    if (orderedCards.length > 0) {
+        observer.observe(orderedCards[0].parentElement);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', staggerSkillsAnimation);
