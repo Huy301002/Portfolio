@@ -492,3 +492,208 @@ function staggerSkillsAnimation() {
 }
 
 window.addEventListener('DOMContentLoaded', staggerSkillsAnimation);
+
+// CV Swiper - Define functions immediately
+var currentCardIndex = 0;
+var totalCards = 2;
+
+// Simple card swap function
+function simpleSwap() {
+  console.log('Simple swap triggered');
+  
+  const cards = document.querySelectorAll('.cv-img');
+  if (cards.length !== 2) {
+    console.log('Invalid number of cards:', cards.length);
+    return;
+  }
+  
+  const frontCard = document.querySelector('.cv-img.cv-front');
+  const backCard = document.querySelector('.cv-img.cv-back');
+  
+  if (!frontCard || !backCard) {
+    console.log('Cards not found, reinitializing classes');
+    // Reinitialize classes
+    cards[0].className = 'cv-img cv-front';
+    cards[1].className = 'cv-img cv-back';
+    return;
+  }
+  
+  // Simple class swap
+  frontCard.classList.remove('cv-front');
+  frontCard.classList.add('cv-back');
+  
+  backCard.classList.remove('cv-back');
+  backCard.classList.add('cv-front');
+  
+  // Counter removed
+  
+  console.log('Card swap completed');
+}
+
+// Export to global scope immediately
+window.swipeRight = simpleSwap;
+window.swipeLeft = simpleSwap;
+window.simpleSwap = simpleSwap;
+
+console.log('CV Swiper functions defined:', typeof window.swipeRight);
+
+function initCVSwiper() {
+  console.log('Initializing CV Swiper...');
+  const cvStack = document.querySelector('.cv-stack');
+  if (!cvStack) {
+    console.log('CV Stack not found!');
+    return;
+  }
+  
+  const cards = document.querySelectorAll('.cv-img');
+  console.log('Found cards:', cards.length);
+  
+  // Ensure initial classes are correct
+  cards.forEach((card, index) => {
+    card.classList.remove('cv-front', 'cv-back');
+    if (index === 0) {
+      card.classList.add('cv-front');
+    } else {
+      card.classList.add('cv-back');
+    }
+  });
+  
+  // Enhanced touch/mouse handling for swipe
+  let startX = 0;
+  let startY = 0;
+  let isDragging = false;
+  let hasMoved = false;
+  
+  // Touch events for mobile
+  cvStack.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+    hasMoved = false;
+    cvStack.classList.add('dragging');
+    console.log('Touch start at:', startX);
+  });
+  
+  cvStack.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const deltaX = Math.abs(currentX - startX);
+    const deltaY = Math.abs(currentY - startY);
+    
+    // If moved more than 10px, consider it a drag
+    if (deltaX > 10 || deltaY > 10) {
+      hasMoved = true;
+    }
+    
+    console.log('Touch move, deltaX:', deltaX, 'deltaY:', deltaY);
+  });
+  
+  cvStack.addEventListener('touchend', function(e) {
+    if (!isDragging) return;
+    
+    if (hasMoved) {
+      const endX = e.changedTouches[0].clientX;
+      const deltaX = endX - startX;
+      
+      console.log('Touch end with movement, deltaX:', deltaX);
+      
+      if (Math.abs(deltaX) > 30) { // Reduced threshold for easier swipe
+        console.log('Swipe detected! Direction:', deltaX > 0 ? 'right' : 'left');
+        simpleSwap();
+      }
+    } else {
+      // It's a tap, not a swipe
+      console.log('Tap detected on CV');
+      simpleSwap();
+    }
+    
+    isDragging = false;
+    hasMoved = false;
+    cvStack.classList.remove('dragging');
+  });
+  
+  // Mouse events for desktop
+  cvStack.addEventListener('mousedown', function(e) {
+    startX = e.clientX;
+    startY = e.clientY;
+    isDragging = true;
+    hasMoved = false;
+    cvStack.classList.add('dragging');
+    console.log('Mouse down at:', startX);
+    e.preventDefault();
+  });
+  
+  cvStack.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    const currentX = e.clientX;
+    const currentY = e.clientY;
+    const deltaX = Math.abs(currentX - startX);
+    const deltaY = Math.abs(currentY - startY);
+    
+    if (deltaX > 5 || deltaY > 5) {
+      hasMoved = true;
+    }
+  });
+  
+  cvStack.addEventListener('mouseup', function(e) {
+    if (!isDragging) return;
+    
+    if (hasMoved) {
+      const endX = e.clientX;
+      const deltaX = endX - startX;
+      
+      console.log('Mouse drag end, deltaX:', deltaX);
+      
+      if (Math.abs(deltaX) > 20) { // Lower threshold for mouse
+        console.log('Mouse drag detected! Direction:', deltaX > 0 ? 'right' : 'left');
+        simpleSwap();
+      }
+    } else {
+      // It's a click, not a drag
+      console.log('Click detected on CV');
+      simpleSwap();
+    }
+    
+    isDragging = false;
+    hasMoved = false;
+    cvStack.classList.remove('dragging');
+  });
+  
+  cvStack.addEventListener('mouseleave', function(e) {
+    isDragging = false;
+    hasMoved = false;
+    cvStack.classList.remove('dragging');
+  });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      console.log('Arrow key pressed:', e.key);
+      simpleSwap();
+    }
+  });
+  
+  // Counter removed
+  
+  console.log('CV Swiper initialized successfully');
+}
+
+// All old swipe handling functions removed - keeping it simple
+
+// Initialize swiper when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing CV Swiper');
+  setTimeout(() => {
+    initCVSwiper();
+  }, 200); // Increased delay to ensure everything is loaded
+});
+
+// Backup initialization if DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+  // DOM is still loading
+  document.addEventListener('DOMContentLoaded', initCVSwiper);
+} else {
+  // DOM is already loaded
+  setTimeout(initCVSwiper, 300);
+}

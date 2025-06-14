@@ -217,40 +217,61 @@
 
     <section id="contact" class="contact section">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <h3>Email</h3>
-                        <p>your.email@example.com</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <h3>Phone</h3>
-                        <p>+84 123 456 789</p>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <h3>Location</h3>
-                        <p>Ho Chi Minh City, Vietnam</p>
-                    </div>
-                </div>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" required placeholder="Your Name">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required placeholder="Your Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" required placeholder="Subject">
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" name="message" required placeholder="Your Message"></textarea>
-                    </div>
-                    <button type="submit" class="cta-button">Send Message</button>
-                </form>
+            <h2 class="section-title">My CV</h2>
+            <div class="cv-stack">
+                <img 
+                    src="images/1.png" 
+                    alt="CV Page 1" 
+                    class="cv-img cv-front" 
+                    tabindex="0" 
+                    aria-label="CV Page 1" 
+                    draggable="false"
+                />
+                <img 
+                    src="images/3.png" 
+                    alt="CV Page 2" 
+                    class="cv-img cv-back" 
+                    tabindex="0" 
+                    aria-label="CV Page 2" 
+                    draggable="false"
+                />
+               
+                
+                <!-- Swipe button -->
+                <button onclick="testSwipe()" class="cta-button swipe-button">
+                    Swipe
+                </button>
+                
+                <!-- Inline script for immediate function availability -->
+                <script>
+                function testSwipe() {
+                    console.log('Test swipe button clicked');
+                    
+                    // Try multiple ways to call the swipe function
+                    if (window.swipeRight) {
+                        console.log('Using window.swipeRight');
+                        window.swipeRight();
+                    } else if (window.simpleSwap) {
+                        console.log('Using window.simpleSwap');
+                        window.simpleSwap();
+                    } else {
+                        console.log('Manual swap');
+                        // Manual swap as fallback
+                        const cards = document.querySelectorAll('.cv-img');
+                        if (cards.length >= 2) {
+                            const front = document.querySelector('.cv-img.cv-front') || cards[0];
+                            const back = document.querySelector('.cv-img.cv-back') || cards[1];
+                            
+                            front.classList.remove('cv-front');
+                            front.classList.add('cv-back');
+                            back.classList.remove('cv-back');
+                            back.classList.add('cv-front');
+                            
+                            console.log('Manual swap completed');
+                        }
+                    }
+                }
+                </script>
             </div>
         </div>
     </section>

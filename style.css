@@ -793,6 +793,22 @@ html {
     perspective: 1000px;
 }
 
+.skill-bento-card, .skill-bento-card * {
+  cursor: default !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  caret-color: transparent !important;
+}
+.skill-bento-card:focus, .skill-bento-card *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.skill-bento-card:hover, .skill-bento-card:active {
+  transform: none !important;
+  box-shadow: none !important;
+  background: rgba(255,255,255,0.1) !important;
+}
+
 .skill-bento-card {
     position: relative;
     border-radius: 16px !important;
@@ -1013,4 +1029,285 @@ html {
     .skill-bento-desc {
         font-size: 0.8rem;
     }
+}
+
+.cv-images-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.cv-image {
+  max-width: 550px;
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+  background: #222;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+  user-select: none;
+  pointer-events: none;
+}
+.cv-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 16px 48px 0 rgba(31,38,135,0.22);
+}
+@media (max-width: 900px) {
+  .cv-images-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .cv-image {
+    max-width: 95vw;
+  }
+}
+
+.cv-stack {
+  position: relative;
+  width: 450px;
+  height: 640px;
+  margin: 0 auto;
+  perspective: 1000px;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.cv-stack:hover {
+  transform: scale(1.02);
+}
+
+.cv-stack:active {
+  transform: scale(0.98);
+}
+
+.cv-stack.dragging {
+  transform: rotate(2deg) scale(1.05);
+  filter: brightness(1.1);
+}
+
+.cv-stack .cv-image {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cv-stack .cv-image:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cv-img {
+  position: absolute;
+  width: 420px;
+  height: 595px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+  background: #222;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+  transition: 
+    opacity 0.5s cubic-bezier(0.4,0,0.2,1),
+    filter 0.5s cubic-bezier(0.4,0,0.2,1),
+    transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  cursor: grab;
+  outline: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.cv-img:active {
+  cursor: grabbing;
+}
+
+.cv-img:focus {
+  box-shadow: 0 0 0 3px #00bcd4;
+}
+
+.cv-img:hover {
+  box-shadow: 0 12px 40px 0 rgba(31,38,135,0.25);
+}
+
+/* Stack positioning */
+.cv-img.cv-front {
+  z-index: 10;
+  opacity: 1;
+  filter: none;
+  transform: translateX(-50%) translateY(-50%) scale(1) rotate(0deg);
+}
+
+.cv-img.cv-back {
+  z-index: 5;
+  opacity: 0.7;
+  filter: blur(1px) grayscale(0.1);
+  transform: translateX(-50%) translateY(-50%) scale(0.95) rotate(-3deg) translateY(-15px);
+}
+
+/* Swipe animations */
+.cv-img.swiping {
+  transition: none !important;
+}
+
+.cv-img.swipe-out-right {
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%) scale(0.8) rotate(30deg) translateX(400px) translateY(-100px);
+}
+
+.cv-img.swipe-out-left {
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-50%) scale(0.8) rotate(-30deg) translateX(-400px) translateY(-100px);
+}
+
+.cv-img.swipe-in {
+  animation: swipeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+/* Swipe animations keyframes */
+@keyframes swipeIn {
+  from {
+    opacity: 0.7;
+    transform: translateX(-50%) translateY(-50%) scale(0.95) rotate(-3deg) translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) scale(1) rotate(0deg);
+  }
+}
+
+/* Swipe indicator */
+.swipe-indicator {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  animation: fadeInOut 3s ease-in-out infinite;
+}
+
+.swipe-indicator svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Card counter */
+.cv-counter {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: #00bcd4;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cv-stack {
+    width: 90vw;
+    max-width: 400px;
+    height: 560px;
+  }
+  
+  .cv-img {
+    width: 90vw;
+    max-width: 380px;
+    height: auto;
+    max-height: 540px;
+  }
+  
+  .swipe-indicator {
+    bottom: -40px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cv-stack {
+    width: 95vw;
+    max-width: 350px;
+    height: 480px;
+  }
+  
+  .cv-img {
+    width: 95vw;
+    max-width: 330px;
+    height: auto;
+    max-height: 460px;
+  }
+  
+  .swipe-indicator {
+    bottom: -35px;
+    font-size: 0.75rem;
+  }
+  
+  .cv-counter {
+    top: -35px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Swipe Button Styles */
+.swipe-button {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--color), var(--accent)) !important;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  filter: none;
+  transform: translateX(-50%) translateY(0);
+  z-index: 20;
+}
+
+.swipe-button:hover {
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+  background: linear-gradient(135deg, #00acc1, #00e5ff) !important;
+}
+
+.swipe-button:active {
+  transform: translateX(-50%) translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+  animation: buttonPulse 0.3s ease;
+}
+
+@keyframes buttonPulse {
+  0% { transform: translateX(-50%) translateY(-1px) scale(1); }
+  50% { transform: translateX(-50%) translateY(-1px) scale(0.98); }
+  100% { transform: translateX(-50%) translateY(-1px) scale(1); }
+}
+
+/* Responsive cho swipe button */
+@media (max-width: 768px) {
+  .swipe-button {
+    bottom: -70px;
+    font-size: 0.9rem;
+    padding: 0.8rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .swipe-button {
+    bottom: -60px;
+    font-size: 0.85rem;
+    padding: 0.7rem 1.8rem;
+  }
 }
